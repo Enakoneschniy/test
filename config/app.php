@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Kiev',
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -167,7 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
         /*
          * Application Service Providers...
          */
