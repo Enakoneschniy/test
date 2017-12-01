@@ -43,7 +43,15 @@ class Users extends Section implements Initializable
      */
     public function initialize()
     {
+        $password =
         $this->addToNavigation($priority = 500);
+
+       /* $this->updating(function($config, $model){
+
+        });
+        $this->updated(function($config, $model){
+
+        });*/
     }
 
     public function getIcon()
@@ -61,23 +69,24 @@ class Users extends Section implements Initializable
      */
     public function onDisplay()
     {
-        return AdminDisplay::datatables()->with('roles')
+        $table = AdminDisplay::datatables()->with('roles')
             ->setHtmlAttribute('class', 'table-primary')
+                ->setActions([
+                AdminColumn::action('password_reset', trans('sleeping_owl::lang.actions.password_reset'))->setAction(route('users.password_reset')),
+            ])
             ->setNewEntryButtonText(trans('sleeping_owl::lang.button.new_user'))
             ->setColumns(
+                AdminColumn::checkbox(),
                 AdminColumn::text('id', '#')->setWidth('30px'),
                 AdminColumn::link('name', trans('sleeping_owl::lang.table.titles.name')),
                 AdminColumn::link('email', 'Email'),
                 AdminColumn::link('rating', trans('sleeping_owl::lang.table.titles.rating')),
                 AdminColumn::link('roles.name', trans('sleeping_owl::lang.table.titles.role'))
-       /*         AdminColumnEditable::select('role')->setWidth('250px')
-                    ->setModelForOptions(new Role)
-                    ->setLabel('Роль')
-                    ->setDisplay('name')
-                    ->setLoadOptionsQueryPreparer(function($element, $query) {
-                        return $query->MyScoupe();
-                    })->setTitle('Выберите роль:')*/
             )->paginate(20);
+        $table->getActions()
+            ->setHtmlAttribute('class', 'pull-left')
+            ->setHtmlAttribute('style', 'margin-top: 15px; margin-left: -16px;');
+        return $table;
     }
 
     /**
@@ -87,7 +96,18 @@ class Users extends Section implements Initializable
      */
     public function onEdit($id)
     {
-
+        return AdminForm::panel()
+            ->setHtmlAttribute('enctype', 'multipart/form-data')
+            ->addBody([
+                AdminFormElement::text('name', trans('sleeping_owl::lang.table.titles.name'))->required(),
+                AdminFormElement::text('email', trans('sleeping_owl::lang.table.titles.email'))->required(),
+                //AdminFormElement::password('password', trans('sleeping_owl::lang.table.titles.password'))->hashWithBcrypt()->required(),
+                AdminFormElement::text('rating', trans('sleeping_owl::lang.table.titles.rating'))->setReadonly(true)->required(),
+                AdminFormElement::image('avatar', trans('sleeping_owl::lang.table.titles.avatar')),
+                AdminFormElement::multiselect('role', trans('sleeping_owl::lang.table.titles.role'))
+                    ->setModelForOptions(Role::class)
+                    ->setDisplay('name')->setFetchColumns('name'),
+            ]);
     }
 
     /**
@@ -95,7 +115,17 @@ class Users extends Section implements Initializable
      */
     public function onCreate()
     {
-        return $this->onEdit(null);
+        return AdminForm::panel()
+            ->setHtmlAttribute('enctype', 'multipart/form-data')
+            ->addBody([
+            AdminFormElement::text('name', trans('sleeping_owl::lang.table.titles.name'))->required(),
+            AdminFormElement::text('email', trans('sleeping_owl::lang.table.titles.email'))->addValidationRule('unique:users')->required(),
+            AdminFormElement::password('password', trans('sleeping_owl::lang.table.titles.password'))->hashWithBcrypt()->required(),
+            AdminFormElement::image('avatar', trans('sleeping_owl::lang.table.titles.avatar')),
+            AdminFormElement::multiselect('role', trans('sleeping_owl::lang.table.titles.role'))
+                    ->setModelForOptions(Role::class)
+                    ->setDisplay('name')->setFetchColumns('name'),
+        ]);
     }
 
     /**

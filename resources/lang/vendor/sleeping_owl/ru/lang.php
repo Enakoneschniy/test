@@ -83,7 +83,11 @@ return [
         'titles' => [
             'name' => 'Имя',
             'rating' => 'Рейтинг',
-            'role' => 'Роль'
+            'role' => 'Роль',
+            'description' => 'Описание',
+            'password' => 'Пароль',
+            'avatar' => 'Фото профиля',
+            'email' => 'Email',
         ]
     ],
     'tree'      => [
@@ -119,7 +123,8 @@ return [
         'yes' => 'Да',
         'no'  => 'Нет',
         'cancel' => 'Отмена',
-        'new_user' => 'Добавить пользователя'
+        'new_user' => 'Добавить пользователя',
+        'new_role' => 'Добавить роль',
     ],
     'message'   => [
         'created'              => '<i class="fa fa-check fa-lg"></i> Запись успешно создана',
@@ -135,4 +140,7 @@ return [
         'users' => 'Пользователи',
         'roles' => 'Роли'
     ],
+    'actions' => [
+        'password_reset' => 'Сброс пароля'
+    ]
 ];

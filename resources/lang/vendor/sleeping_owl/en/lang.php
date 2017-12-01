@@ -83,7 +83,11 @@ return [
         'titles' => [
             'name' => 'Name',
             'rating' => 'Rating',
-            'role' => 'Role'
+            'role' => 'Role',
+            'description' => 'Description',
+            'password' => 'Password',
+            'avatar' => 'User image',
+            'email' => 'Email',
         ]
     ],
     'tree' => [
@@ -135,5 +139,8 @@ return [
     'titles' => [
         'users' => 'Users',
         'roles' => 'Roles'
+    ],
+    'actions' => [
+        'password_reset' => 'Reset password'
     ]
 ];

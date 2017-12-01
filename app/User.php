@@ -8,10 +8,12 @@ use App\Models\Role;
 use App\Models\Tag;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use \KodiComponents\Support\Upload;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Upload;
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +33,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $casts = [
+        'avatar' => 'image'
+    ];
+
     public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function role(){
         return $this->belongsToMany(Role::class);
     }
 
@@ -49,5 +59,8 @@ class User extends Authenticatable
 
     public function isAdmin(){
         return null !== $this->roles()->where('name', 'admin')->first();
+    }
+    public function isModerator(){
+        return null !== $this->roles()->where('name', 'moderator')->first();
     }
 }
