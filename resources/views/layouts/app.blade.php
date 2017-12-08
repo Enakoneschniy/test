@@ -36,7 +36,11 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        &nbsp;@foreach($menus as $menu)
+                            <li class="{{$loop->first ? 'active': ''}}">
+                                <a href="#">{{$menu}}</a>
+                            </li>
+                         @endforeach
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -70,8 +74,9 @@
                 </div>
             </div>
         </nav>
-
-        @yield('content')
+        <div class="container">
+            @yield('content')
+        </div>
     </div>
 
     <!-- Scripts -->

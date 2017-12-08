@@ -43,15 +43,8 @@ class Users extends Section implements Initializable
      */
     public function initialize()
     {
-        $password =
         $this->addToNavigation($priority = 500);
 
-       /* $this->updating(function($config, $model){
-
-        });
-        $this->updated(function($config, $model){
-
-        });*/
     }
 
     public function getIcon()

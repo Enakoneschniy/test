@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'PostController@index')->name('index');
+Route::group(['prefix' => 'story'], function (){
+    Route::get('/{id?}', 'PostController@single')->name('single-post')->where('id', '[0-9]+');
+    Route::put('/{id?}', 'PostController@update');
+    Route::delete('/{id?}', 'PostController@delete');
+    Route::post('/', 'PostController@create');
+
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+

@@ -20,6 +20,11 @@ class CreatePostsTable extends Migration
             $table->text('preview_text');
             $table->longText('detail_text');
             $table->integer('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->integer('rating')->default(0);
             $table->boolean('draft')->default(true);
             $table->softDeletes();

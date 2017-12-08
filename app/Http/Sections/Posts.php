@@ -2,9 +2,16 @@
 
 namespace App\Http\Sections;
 
+use App\Models\Role;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Section;
+use AdminColumn;
+use AdminDisplay;
+use AdminForm;
+use AdminFormElement;
+use AdminColumnEditable;
 
 /**
  * Class Posts
@@ -13,7 +20,7 @@ use SleepingOwl\Admin\Section;
  *
  * @see http://sleepingowladmin.ru/docs/model_configuration_section
  */
-class Posts extends Section
+class Posts extends Section implements Initializable
 {
     /**
      * @see http://sleepingowladmin.ru/docs/model_configuration#ограничение-прав-доступа
@@ -31,6 +38,18 @@ class Posts extends Section
      * @var string
      */
     protected $alias;
+
+    public function initialize()
+    {
+        $this->addToNavigation($priority = 500);
+
+        /* $this->updating(function($config, $model){
+
+         });
+         $this->updated(function($config, $model){
+
+         });*/
+    }
 
     /**
      * @return DisplayInterface
